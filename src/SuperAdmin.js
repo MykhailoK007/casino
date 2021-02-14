@@ -1,30 +1,44 @@
-import {User} from "./User.js";
-import {Casino} from "./Casino.js";
-import {isEnoughMoney} from "../tests.js";
-
+import { User } from './User.js';
+import { Casino } from './Casino.js';
+import {
+  isEnoughMoney,
+  isAllowedCreateCasino,
+  isCasinoExist,
+} from '../tests.js';
 
 export class SuperAdmin extends User {
+  constructor(...props) {
+    super(...props);
+    this.casino = null;
+  }
   createCasino(name) {
+    isAllowedCreateCasino.call(this);
+    this.casino = new Casino(name);
     console.log(` ${this.name} created casino: ${name}`);
-    return new Casino(name);
+    return this.casino;
   }
-  createGameMachine(casino, number) {
+  createGameMachine(number) {
+    isCasinoExist.call(this);
     isEnoughMoney.call(this, number);
-    this.money -=number;
-
-    return casino.addMachine(number);
+    this.money -= number;
+    return this.casino.addMachine(number);
   }
-  receiveMoney(casino, money) {
-    casino.receiveMoney(money);
+  receiveMoney(money) {
+    this.casino.giveMoney(money);
     this.money += money;
+    console.log(`Your balance: ${this.money}$`);
   }
-  giveMoneyForCasino(casino, money) {
+  giveMoneyForCasino(money) {
     isEnoughMoney.call(this, money);
-    casino.addMoney(money);
+    this.casino.addMoney(money);
     this.money -= money;
   }
   giveMoneyForMachine(machine, money) {
-    machine.giveMoney(money);
+    machine.receiveMoney(money);
     this.money -= money;
+  }
+  removeGameMachine(gameMachine) {
+    this.money += this.casino.removeGameMachine(gameMachine);
+    console.log(`Your balance: ${this.money}$`);
   }
 }

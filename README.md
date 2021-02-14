@@ -1,4 +1,4 @@
-#Casino
+## Casino
 In this app we have opportunity to add user or SuperUser.
  
 User can  only play game machine.
@@ -40,6 +40,7 @@ player.play(10, firstMachine);
 </li>
 <li>
     Receive money from casino. First param is casino and second is money. <br> 
+    This method gets money  of game machines and starts from machine that has the most money. <br>
     <code>
     admin.receiveMoney(lasVegas, 500)
     </code>
