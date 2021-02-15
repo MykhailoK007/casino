@@ -1,5 +1,5 @@
-import { User } from './src/User.js';
-import { SuperAdmin } from './src/SuperAdmin.js';
+import { User } from './src/User';
+import { SuperAdmin } from './src/SuperAdmin';
 
 let admin = new SuperAdmin('Admin', 10000);
 let lasVegas = admin.createCasino('Las Vegas');

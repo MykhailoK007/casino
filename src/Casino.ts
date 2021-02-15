@@ -1,23 +1,29 @@
-import { GameMachine } from './GameMachine.js';
+import { GameMachine } from './GameMachine';
 import { isEnoughMoney } from '../tests.js';
+interface CasinoInterface {
+  machines: GameMachine[];
+  name: string;
+  getTotalAmountMoney(): number;
+  addMoney(money: number): void;
+  getMachineCount(): void;
+  addMachine(money: number): GameMachine;
+  giveMoney(money: number): void;
+  removeGameMachine(gameMachine: GameMachine): number;
+}
 
-export class Casino {
-  constructor(name) {
-    this.name = name;
-    this.machineCount = 0;
-    this.machines = [];
-  }
+export class Casino implements CasinoInterface {
+  machines = [];
+  constructor(public name: string) {}
   getTotalAmountMoney() {
-    let totalAmountMoney = this.machines.reduce(
-      (acum, machine) => acum + machine.getMoney(),
+    let totalAmountMoney: number = this.machines.reduce(
+      (acum: number, machine: GameMachine) => acum + machine.getMoney(),
       0
     );
     console.log(`${totalAmountMoney}$ in ${this.name} casino.`);
-
     return totalAmountMoney;
   }
   addMoney(money) {
-    let dividedAmount = money / this.machines.length;
+    let dividedAmount: number = money / this.machines.length;
     this.machines.map(machine => (machine.money += dividedAmount));
   }
   getMachineCount() {
@@ -28,23 +34,21 @@ export class Casino {
     );
   }
   addMachine(money) {
-    let newMachine = new GameMachine(money);
+    let newMachine: GameMachine = new GameMachine(money);
     this.machines.push(newMachine);
-    this.machineCount++;
     this.machines.sort((a, b) => b.getMoney() - a.getMoney());
     console.log(`Added one machine to ${this.name} casino`);
     return newMachine;
   }
-  giveMoney(number) {
-    isEnoughMoney.call(this, number);
-    let requiredAmount = number;
+  giveMoney(money) {
+    isEnoughMoney.call(this, money);
+    let requiredAmount: number = money;
     this.machines.map(machine => {
       if (requiredAmount > 0) {
         let moneyInMachine = machine.getMoney();
-        let gotMoney =
+        let gotMoney: number =
           requiredAmount < moneyInMachine ? requiredAmount : moneyInMachine;
         machine.giveMoney(gotMoney);
-        this.money -= gotMoney;
         return (requiredAmount -= gotMoney);
       }
     });
@@ -52,12 +56,12 @@ export class Casino {
   }
   removeGameMachine(gameMachine) {
     if (this.machines.length === 1) {
-      let amount = gameMachine.getMoney();
+      let amount: number = gameMachine.getMoney();
       this.machines = [];
       return amount;
     }
     this.machines = this.machines.filter(machine => machine !== gameMachine);
-    let dividedMoney = gameMachine.getMoney() / this.machines.length;
+    let dividedMoney: number = gameMachine.getMoney() / this.machines.length;
     this.machines.map(machine => machine.giveMoney(dividedMoney));
     console.log('One machine was removed');
     return 0;

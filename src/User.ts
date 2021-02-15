@@ -1,10 +1,14 @@
 import { isEnoughMoney, checkStartCapital, isGameMachine } from '../tests.js';
+import { GameMachine } from './GameMachine';
 
-export class User {
-  constructor(name, money) {
+export interface UserInterface {
+  readonly name: string;
+  money: number;
+  play(money: number, b: GameMachine): void;
+}
+export class User implements UserInterface {
+  constructor(public name: string, public money) {
     checkStartCapital.call(this);
-    this.name = name;
-    this.money = money;
   }
   play(money, machine) {
     isGameMachine(machine);

@@ -2,13 +2,19 @@
   "name": "incora-camp",
   "version": "1.0.0",
   "description": "",
-  "main": "script.js",
+  "main": "script.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.5",
+    "webpack": "^5.22.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.17",
+    "webpack-cli": "^4.5.0"
   }
 }

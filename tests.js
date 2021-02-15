@@ -1,10 +1,10 @@
-import { GameMachine } from './src/GameMachine.js';
+import { GameMachine } from './src/GameMachine';
 
 export function isEnoughMoney(enteredMoney) {
   if (enteredMoney > this.money) throw new Error('Don`t enough money.');
 }
 export function isGameMachine(value) {
-  if (!(value instanceof GameMachine))
+  if (!(value.constructor.name === GameMachine.name))
     throw new Error('It isn`t game machine!');
 }
 

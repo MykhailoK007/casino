@@ -1,27 +1,35 @@
-import { User } from './User.js';
-import { Casino } from './Casino.js';
+import { User, UserInterface } from './User';
+import { Casino } from './Casino';
 import {
   isEnoughMoney,
   isAllowedCreateCasino,
   isCasinoExist,
 } from '../tests.js';
+import { GameMachine } from './GameMachine';
 
-export class SuperAdmin extends User {
-  constructor(...props) {
-    super(...props);
-    this.casino = null;
-  }
+interface SuperAdminInterface extends UserInterface {
+  casino: null | Casino;
+  createCasino(a: string): Casino;
+  createGameMachine(money: number): GameMachine;
+  receiveMoney(money: number):void;
+  giveMoneyForCasino(money: number):void;
+  giveMoneyForMachine(machine:GameMachine, money:number):void;
+  removeGameMachine(gameMachine:GameMachine):void;
+
+}
+export class SuperAdmin extends User implements SuperAdminInterface {
+  casino = null;
   createCasino(name) {
     isAllowedCreateCasino.call(this);
     this.casino = new Casino(name);
     console.log(` ${this.name} created casino: ${name}`);
     return this.casino;
   }
-  createGameMachine(number) {
+  createGameMachine(money) {
     isCasinoExist.call(this);
-    isEnoughMoney.call(this, number);
-    this.money -= number;
-    return this.casino.addMachine(number);
+    isEnoughMoney.call(this, money);
+    this.money -= money;
+    return this.casino.addMachine(money);
   }
   receiveMoney(money) {
     this.casino.giveMoney(money);
