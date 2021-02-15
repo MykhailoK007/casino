@@ -4,7 +4,6 @@ import { isEnoughMoney } from '../tests.js';
 export class Casino {
   constructor(name) {
     this.name = name;
-    this.machineCount = 0;
     this.machines = [];
   }
   getTotalAmountMoney() {
@@ -30,7 +29,6 @@ export class Casino {
   addMachine(money) {
     let newMachine = new GameMachine(money);
     this.machines.push(newMachine);
-    this.machineCount++;
     this.machines.sort((a, b) => b.getMoney() - a.getMoney());
     console.log(`Added one machine to ${this.name} casino`);
     return newMachine;
@@ -44,7 +42,6 @@ export class Casino {
         let gotMoney =
           requiredAmount < moneyInMachine ? requiredAmount : moneyInMachine;
         machine.giveMoney(gotMoney);
-        this.money -= gotMoney;
         return (requiredAmount -= gotMoney);
       }
     });
