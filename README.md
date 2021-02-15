@@ -21,28 +21,52 @@ Create a casino <br>
 </code>
 </li>
 <li>
-Create game machine and give it money. First param is casino and second is money. <br>
+Create game machine and give it money. <br>
 <code>
 const firstMachine = admin.createGameMachine(lasVegas,1000);
 </code> 
 </li>
 <li>
-Create user and give him money <br>
+Create user and give him money. <br>
 <code>
 let player = new User('Petro', 100);
 </code>
 </li>
 <li>
-Start game. First param is money and second is game machine. <br> 
+   Start game. <br> 
+    First param is money and second is game machine. <br> 
 <code>
 player.play(10, firstMachine);
 </code>
 </li>
 <li>
-    Receive money from casino. First param is casino and second is money. <br> 
+    Receive money from casino with param  money. <br> 
     This method gets money  of game machines and starts from machine that has the most money. <br>
     <code>
-    admin.receiveMoney(lasVegas, 500)
+    admin.receiveMoney(lasVegas, 500);
     </code>
+</li>
+<li>
+    Add money to casino. <br>
+    This method gets money and divides it between game machines of that casino. <br>
+    <code>
+        admin.giveMoneyForCasino(300);
+    </code> 
+</li>
+<li> 
+    Add money to game machine. <br>
+    This method gets game machine in param and add money to it. <br>
+    <code>
+        admin.giveMoneyForMachine(lasVegas,300);
+    </code>
+</li>
+<li>
+    Delete game machine. <br>
+    This method gets game machine and remove it. 
+    All money that was in machine will be divided between existing machine in casino.
+    If we delete last machine that all money will be transferred to casino manager. <br>
+    <code>
+        admin.removeGameMachine(firstMachine);
+    </code>     
 </li>
 </ol>  
